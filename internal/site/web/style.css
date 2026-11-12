@@ -321,3 +321,14 @@ a.actor:hover { border-color: var(--axis); background: var(--page); }
 .glossary dt { font-weight: 700; font-size: 14px; }
 .glossary dd { margin: 2px 0 0; font-size: 14px; color: var(--text-secondary); }
 @media (max-width: 640px) { .glossary { grid-template-columns: minmax(0, 1fr); } }
+
+/* satellites */
+h4.sat-group { margin: 4px 0 10px; font-size: 15px; }
+.card h4.sat-group ~ h4.sat-group { margin-top: 24px; }
+.sats th:nth-child(1) { width: 20%; } .sats th:nth-child(2) { width: 15%; } .sats th:nth-child(3) { width: auto; } .sats th:nth-child(4) { width: 20%; }
+.sat-pill { display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase;
+  border-radius: 999px; padding: 2px 8px; border: 1px solid currentColor; }
+.sat-pill.using { color: var(--series-3); }
+.sat-pill.could { color: var(--accent); }
+.sat-pill.gone { color: var(--text-muted); }
+.sat-pill.no { color: var(--fire); }
