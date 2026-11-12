@@ -332,3 +332,13 @@ h4.sat-group { margin: 4px 0 10px; font-size: 15px; }
 .sat-pill.could { color: var(--accent); }
 .sat-pill.gone { color: var(--text-muted); }
 .sat-pill.no { color: var(--fire); }
+
+/* switch calculator */
+.calc-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin: 12px 0 16px; }
+.calc-grid label { display: flex; flex-direction: column; gap: 6px; font-size: 14px; font-weight: 600; }
+.calc-grid output { font-weight: 400; color: var(--text-secondary); margin-left: 4px; }
+.calc-grid input[type=range] { width: 100%; accent-color: var(--accent); }
+.calc-grid .small { font-weight: 400; }
+.calc-out { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 640px) { .calc-grid, .calc-out { grid-template-columns: minmax(0, 1fr); } }
+.calc-out #c-verdict { font-size: 22px; line-height: 1.25; }

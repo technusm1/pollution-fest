@@ -596,7 +596,35 @@ function checkBingo() {
   $("bingo").classList.toggle("won", won);
 }
 
+// "Should I switch?" calculator. CACP Price Policy for Kharif Crops 2025-26,
+// Punjab, TE2023-24 (Annex 5.2), Rs/ha; converted to per acre.
+const HA_PER_ACRE = 1 / 2.471;
+const CACP = { paddyGross: 152161, paddyCost: 60331, maizeCost: 59193 };
+const WHEAT_MSP = 2585; // Rs/q, RMS 2026-27
+
+function renderSwitch() {
+  const y = +$("c-yield").value, p = +$("c-price").value, b = +$("c-bonus").value;
+  const rs = (n) => "₹" + Math.round(n).toLocaleString("en-IN");
+  const paddy = (CACP.paddyGross - CACP.paddyCost) * HA_PER_ACRE;
+  const cost = CACP.maizeCost * HA_PER_ACRE;
+  const maize = y * p - cost + b * WHEAT_MSP;
+  const diff = maize - paddy;
+  const breakeven = (paddy + cost - b * WHEAT_MSP) / p;
+  $("c-yield-o").textContent = `${y} q/acre`;
+  $("c-price-o").textContent = `₹${p.toLocaleString("en-IN")}/q`;
+  $("c-bonus-o").textContent = `${b} q/acre`;
+  $("c-wheat").textContent = WHEAT_MSP.toLocaleString("en-IN");
+  $("c-paddy").textContent = rs(paddy);
+  $("c-maize").textContent = rs(maize);
+  $("c-maize-note").textContent = `${rs(y * p)} grain − ${rs(cost)} costs + ${rs(b * WHEAT_MSP)} wheat bonus`;
+  $("c-verdict").textContent = diff >= 0 ? `Maize wins by ${rs(diff)}` : `Paddy wins by ${rs(-diff)}`;
+  $("c-verdict-tile").classList.toggle("warn", diff < 0);
+  $("c-breakeven").textContent = `At ₹${p.toLocaleString("en-IN")}/q, maize breaks even at ${breakeven.toFixed(1)} q/acre.`;
+}
+
 async function main() {
+  ["c-yield", "c-price", "c-bonus"].forEach((id) => $(id).addEventListener("input", renderSwitch));
+  renderSwitch();
   newBingo();
   renderGantt();
   initGlossary();

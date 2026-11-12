@@ -386,6 +386,30 @@
       <p class="muted small">PAU on PR-126: it "<a href="https://www.tribuneindia.com/news/ludhiana/pr-126-variety-of-rice-more-suited-to-conditions-pau-tells-farmers" target="_blank" rel="noopener">requires less water, has less straw load while ensuring more window period between rice harvest and wheat sowing</a>". The shorter the paddy season, the less the farmer needs a matchstick.</p>
     </div>
 
+    <h3 class="sub" id="switch">Should I switch? Do the maths yourself 🧮</h3>
+    <div class="card calc">
+      <p class="muted small">Paddy → wheat against kharif maize → wheat, per acre per year. Paddy and maize costs are the government's own Punjab figures
+        (<a href="https://cacp.da.gov.in/Document/EnglishReports/KharifReports2025-26_20250825125215821.pdf" target="_blank" rel="noopener">CACP, Kharif 2025-26</a>, averages for 2021-22 to 2023-24, paid-out costs plus family labour).
+        Wheat is the same after both, except that wheat after maize <a href="https://tribuneindia.com/news/coordinated-push-needed-to-spur-maize-farming-510109" target="_blank" rel="noopener">yields 4–5 quintals/ha more</a>. Move the sliders.</p>
+      <div class="calc-grid">
+        <label>Maize yield <output id="c-yield-o"></output>
+          <input type="range" id="c-yield" min="10" max="32" step="0.5" value="17.5">
+          <span class="muted small">Punjab average ~17.4 q/acre (<a href="https://www.pau.edu/content/ccil/pf/pp_kharif.pdf" target="_blank" rel="noopener">PAU</a>); recommended hybrids 21–25</span></label>
+        <label>Maize price <output id="c-price-o"></output>
+          <input type="range" id="c-price" min="1200" max="3200" step="10" value="2410">
+          <span class="muted small">MSP 2026-27: ₹2,410. Punjab mandis in June 2026: <a href="https://www.tribuneindia.com/news/amritsar/maize-procurement-halted-amid-dispute-between-buyers-commission-agents/" target="_blank" rel="noopener">₹1,500–2,000</a></span></label>
+        <label>Extra wheat after maize <output id="c-bonus-o"></output>
+          <input type="range" id="c-bonus" min="0" max="3" step="0.1" value="1.8">
+          <span class="muted small">4–5 q/ha ≈ 1.6–2.0 q/acre, valued at the wheat MSP (₹<span id="c-wheat"></span>)</span></label>
+      </div>
+      <div class="calc-out">
+        <div class="tile"><div class="tile-label">Paddy, net per acre</div><div class="tile-value" id="c-paddy">–</div><div class="tile-note">CACP average, at MSP</div></div>
+        <div class="tile"><div class="tile-label">Maize + wheat bonus, net per acre</div><div class="tile-value" id="c-maize">–</div><div class="tile-note" id="c-maize-note"></div></div>
+        <div class="tile" id="c-verdict-tile"><div class="tile-label">Verdict</div><div class="tile-value" id="c-verdict">–</div><div class="tile-note" id="c-breakeven"></div></div>
+      </div>
+      <p class="muted small">Net = gross value minus paid-out costs and family labour (CACP's "A2+FL"). It ignores paddy's straw-management cost and the option of selling green maize as silage, both of which favour maize. A farmer who can't sell at the price on the slider can't use this result; that's the whole problem.</p>
+    </div>
+
     <h3 class="sub">How to actually make them switch (hint: not a press release)</h3>
     <div class="easyhard">
       <div class="card hard">
