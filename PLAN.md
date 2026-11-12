@@ -108,7 +108,7 @@ Rule: "the sun, not the wind". Make the better crop the farmer's own best choice
 - [ ] Fuel-rice ledger: FCI rice to ethanol by year, sale price vs economic cost, implied loss
 - [ ] Distillery × groundwater map (plant capacity over CGWB block categories)
 - [ ] "Everyone agrees" timeline: who proposed it vs what happened
-- [ ] Reconcile live-site claims with the new research (maize returns, 110 vs 111 blocks)
+- [ ] Reconcile live-site claims with the new research (maize returns "roughly equal", 110 vs 111 blocks, paddy "~30 lakh ha" vs 32.46 lakh ha in 2025)
 
 ## Known limitations (also shown on the site)
 - Detections ≠ fires ≠ burnt area. Multiple satellites can see the same fire.
