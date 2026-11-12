@@ -100,6 +100,16 @@ GitHub Actions (cron, every 3h)
 - [ ] IITM/CAQM Decision Support System stubble-contribution % where available
 - [ ] Lagged correlation: upwind fire activity → Delhi PM2.5
 
+### Phase 6: The way out (draft on branch `solution-research`, see `docs/solution.md`)
+Rule: "the sun, not the wind". Make the better crop the farmer's own best choice; no policing.
+- [x] Research notes, sourced (`docs/research/`): maize economics, groundwater and history, tried schemes, private demand, ethanol feedstock
+- [x] Draft case: feed Punjab's distilleries with Punjab's kharif maize
+- [x] "Should I switch?" calculator (CACP Punjab costs), draft
+- [ ] Fuel-rice ledger: FCI rice to ethanol by year, sale price vs economic cost, implied loss
+- [ ] Distillery × groundwater map (plant capacity over CGWB block categories)
+- [ ] "Everyone agrees" timeline: who proposed it vs what happened
+- [ ] Reconcile live-site claims with the new research (maize returns, 110 vs 111 blocks)
+
 ## Known limitations (also shown on the site)
 - Detections ≠ fires ≠ burnt area. Multiple satellites can see the same fire.
 - Small or short fires below sensor detection limits are missed; haze and cloud hide fires.
