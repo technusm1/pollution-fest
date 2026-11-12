@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Parali Watch</title>
+<meta name="description" content="Tracking north India's annual smoke festival from space. Satellite-detected farm fires in Punjab, Haryana, UP, Rajasthan, Delhi and Uttarakhand, updated every 3 hours.">
+<meta property="og:title" content="Parali Watch">
+<meta property="og:description" content="Tracking north India's annual smoke festival from space, because someone has to.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔥</text></svg>">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="kicker">Parali Watch</p>
+    <h1>North India's annual smoke festival,<br>tracked from space.</h1>
+    <p class="lede">Every October, north India sets its fields on fire and its governments set up a committee.
+      We use NASA satellites to count the fires so you don't have to take anyone's word for it.
+      <a href="#effects">What the smoke does</a> · <a href="#farmer">Why the farmer isn't the villain</a> · <a href="#grow">What Punjab could grow</a> · <a href="#explore">Explore the fires</a> · <a href="#glossary">Glossary</a></p>
+
+    <div class="hero-stats">
+      <div class="hero-stat big">
+        <div class="hero-num" id="h-season">–</div>
+        <div class="hero-label">fire detections this kharif season <span class="muted" id="h-season-since"></span></div>
+        <div class="hero-quip">…and those are just the fires that showed up when the satellite was watching.</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-num" id="h-24h">–</div>
+        <div class="hero-label">in the last 24 hours of data</div>
+      </div>
+      <div class="hero-stat flame">
+        <div class="hero-label">🏆 Golden Matchstick Award</div>
+        <div class="hero-award" id="h-award">–</div>
+        <div class="hero-label" id="h-award-note">most detections in the last 24 hours</div>
+      </div>
+    </div>
+    <p class="freshness muted small" id="freshness"></p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ===== What the festival does ===== -->
+  <section class="story" id="effects">
+    <h2 class="section-title">Festival highlights: what you get, whether you bought a ticket or not 🎟️</h2>
+    <p class="muted">From mid-October to late November, farm smoke rolls across the Indo-Gangetic plain, meets cold still air, and settles in for the season.
+      Delhi's official AQI (CPCB 24-hour average) was <strong><a href="https://www.etvbharat.com/en/bharat/post-diwali-smog-blankets-major-indian-cities-delhi-ncr-aqi-hits-376-pollution-india-enn26110902132" target="_blank" rel="noopener">376 at 4 PM on Diwali, Sun 8 Nov 2026</a></strong>, and <a href="https://www.outlookindia.com/national/delhi-smog-after-diwali-aqi-371-severe-air-pollution-stubble-burning-grap-stage-3" target="_blank" rel="noopener">344 at 4 PM on Mon 9 Nov</a>, with 15 stations in the "severe" band. On Diwali night, PM2.5 readings at several monitoring stations <a href="https://www.businesstoday.in/india/story/delhis-diwali-air-hit-3744-as-125-pollution-readings-went-missing-from-cpcb-records-heres-what-the-data-shows-566582-2026-11-10" target="_blank" rel="noopener">conveniently went blank</a>. Here's this year's programme.</p>
+    <div class="effects">
+      <article class="effect">
+        <div class="effect-emoji" aria-hidden="true">⏳</div>
+        <h3>Complimentary life-shortening</h3>
+        <p>If Delhi's air met the WHO guideline, residents would live about <strong>8.2 years longer</strong>. Haryana: 5.3 years. UP: 5 years. Year-round dirty air does this, and the festival is its loudest act.</p>
+        <p class="src"><a href="https://epic.uchicago.in/all-of-india-breathes-bad-air-aqli2025-report-says/" target="_blank" rel="noopener">AQLI 2025, EPIC Chicago (2023 data)</a></p>
+      </article>
+      <article class="effect">
+        <div class="effect-emoji" aria-hidden="true">🎤</div>
+        <h3>The headliner: stubble smoke</h3>
+        <p>On the worst days, farm fires made up <strong>38%</strong> of Delhi's PM2.5 in 2024 and <strong>22%</strong> in 2025. Across November it averages less (20% in 2024, 7% in 2025), but it turns bad air into a public-health emergency overnight.</p>
+        <p class="src"><a href="https://energyandcleanair.org/wp/wp-content/uploads/2025/12/CREA_Press-Release_National_India_November_25_Monthly-AQ-Snapshot.pdf" target="_blank" rel="noopener">IITM Decision Support System, via CREA (Nov 2025 snapshot)</a></p>
+      </article>
+      <article class="effect">
+        <div class="effect-emoji" aria-hidden="true">🥁</div>
+        <h3>The encore nobody asked for</h3>
+        <p>When the fires stop, Delhi's December smog often gets <em>worse</em>, thanks to its own vehicles, dust and industry. Stubble is the guest who gets blamed for the whole party, then leaves early while the party carries on.</p>
+        <p class="src"><a href="https://www.cseindia.org/beyond-the-burn-delhi-s-winter-smog-intensifies-even-after-stubble-fires-fade-12982" target="_blank" rel="noopener">CSE analysis, Dec 2025</a></p>
+      </article>
+      <article class="effect">
+        <div class="effect-emoji" aria-hidden="true">🏫</div>
+        <h3>Surprise holidays!</h3>
+        <p>Schools go online. Construction stops. This year: a <strong>15-day construction ban</strong> across NCR from 5 Nov, and half of office staff in Noida and Gurugram sent home. Construction workers get the holiday too. The pay is another matter.</p>
+        <p class="src"><a href="https://indianexpress.com/article/cities/delhi/caqm-bans-construction-demolition-delhi-ncr-november-5-20-bhupender-yadav-work-from-home-air-pollution-10943786/" target="_blank" rel="noopener">Indian Express, Nov 2026</a></p>
+      </article>
+      <article class="effect">
+        <div class="effect-emoji" aria-hidden="true">🌾</div>
+        <h3>Roasted soil, served hot</h3>
+        <p>Every tonne of straw burnt sends roughly <strong>5.5 kg of nitrogen, 25 kg of potash, 1.2 kg of sulphur and ~400 kg of carbon</strong> up in smoke. Farmers then buy fertiliser to put it back. Truly a circular economy.</p>
+        <p class="src"><a href="https://dip.goa.gov.in/burning-crop-residues-harms-environment/" target="_blank" rel="noopener">Govt. of Goa</a> / <a href="https://www.frontiersin.org/articles/10.3389/fsoil.2025.1649105/full" target="_blank" rel="noopener">Frontiers in Soil Science, 2025</a></p>
+      </article>
+      <article class="effect">
+        <div class="effect-emoji" aria-hidden="true">🏡</div>
+        <h3>Front-row seats: rural Punjab &amp; Haryana</h3>
+        <p>Delhi gets the headlines, but the villages next to the burning fields breathe it first and worst, with no smog towers and no TV debates. They're also where the matchstick gets lit, which tells you how little choice is involved.</p>
+        <p class="src">&nbsp;</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===== The trick ===== -->
+  <section class="story">
+    <h2 class="section-title">The magic trick: make fires disappear without putting them out</h2>
+    <div class="grid2">
+      <div class="card">
+        <h3>Satellite fire counts are collapsing 📉</h3>
+        <p class="muted small">Detections from the same satellite (VIIRS on NOAA-20), 15 Sep to <span id="yoy-cutoff">today's date</span>, every year. Same satellite, same window, so it's a fair comparison.</p>
+        <div class="legend" id="yoy-legend"></div>
+        <div class="chart"><canvas id="yoy" aria-label="Season detections by year and state"></canvas></div>
+        <p class="callout" id="yoy-callout"></p>
+      </div>
+      <div class="card">
+        <h3>…but the burnt fields didn't get the memo 🔥</h3>
+        <p class="muted small">Change from 2024 to 2025: fires officially counted vs land actually burnt (satellite burn scars). Source: iFOREST, via <a href="https://indianexpress.com/article/cities/delhi/stubble-burning-air-pollution-supreme-court-protocol-burnt-area-farm-fires-10959536/" target="_blank" rel="noopener">Indian Express, 12 Nov 2026</a>.</p>
+        <div class="legend">
+          <span class="item"><span class="swatch" style="background:var(--series-1)"></span>Fires counted</span>
+          <span class="item"><span class="swatch" style="background:var(--series-2)"></span>Area burnt</span>
+        </div>
+        <div class="chart short"><canvas id="gap" aria-label="Fire count change vs burnt area change, 2024 to 2025"></canvas></div>
+        <p class="callout">In Haryana, the fire count <strong>halved</strong> while the burnt area <strong>grew by a quarter</strong>.
+          That's not a pollution fix. That's a scheduling fix.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Hide and seek ===== -->
+  <section class="story">
+    <h2 class="section-title">Hide and seek, national championship edition</h2>
+    <div class="grid2 hide-seek">
+      <div class="card prose">
+        <p>The satellites behind official fire counts circle the Earth on a fixed schedule. Over Punjab, the main ones pass over
+          <strong>between noon and 3 PM</strong>, then come back at 1–3 AM.</p>
+        <p>Farmers worked this out. In 2024 the Supreme Court heard that farmers were allegedly being <em>advised</em> to burn after the
+          satellites had gone. iFOREST found <strong>over 90% of large fires in 2024–25 burned after 3 PM</strong>. In 2025 an ISRO study confirmed that peak burning
+          had shifted to late afternoon and evening.</p>
+        <p>So why does the chart below show any afternoon fires at all? Thank <strong>Aqua</strong>, a NASA satellite launched in 2002.
+          In retirement its orbit is drifting later in the day, and it now limps over Punjab at around 3–4:30 PM. Our best eye on the evening
+          is a 24-year-old satellite that's running late. 🛰️👴</p>
+      </div>
+      <div class="card">
+        <h3>When fires get spotted (IST)</h3>
+        <p class="muted small">Detections by hour for the interval selected below. The shaded band is when most large fires actually burn.</p>
+        <div class="chart"><canvas id="by-hour" aria-label="Detections by hour of day"></canvas></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Explorer ===== -->
+  <section class="story" id="explore">
+    <h2 class="section-title">The fire explorer</h2>
+    <p class="muted">Pick any window. Every chart on this page except the season comparison follows it, and the URL updates, so you can send the exact view to your MLA.</p>
+
+    <form id="filters" class="filters" aria-label="Filters">
+      <label>From (IST)<input type="datetime-local" id="from" required></label>
+      <label>To (IST)<input type="datetime-local" id="to" required></label>
+      <div class="presets" role="group" aria-label="Quick ranges">
+        <button type="button" data-preset="24h">24 h</button>
+        <button type="button" data-preset="7d">7 days</button>
+        <button type="button" data-preset="30d">30 days</button>
+        <button type="button" data-preset="season">Kharif season</button>
+      </div>
+      <label>Min confidence
+        <select id="conf">
+          <option value="1">Low +</option>
+          <option value="2" selected>Nominal +</option>
+          <option value="3">High only</option>
+        </select>
+      </label>
+      <fieldset id="states" class="states"><legend>States</legend></fieldset>
+      <button type="submit" class="primary">Apply</button>
+    </form>
+
+    <div class="tiles" aria-label="Key numbers">
+      <div class="tile"><div class="tile-label">Fire detections</div><div class="tile-value" id="k-total">–</div><div class="tile-note">satellite pixels flagged as burning</div></div>
+      <div class="tile"><div class="tile-label">Total fire radiative power</div><div class="tile-value" id="k-frp">–</div><div class="tile-note">sum of MW across detections</div></div>
+      <div class="tile"><div class="tile-label">Districts with fires</div><div class="tile-value" id="k-districts">–</div><div class="tile-note" id="k-top">&nbsp;</div></div>
+      <div class="tile warn"><div class="tile-label">Spotted after 3 PM IST</div><div class="tile-value" id="k-after3">–</div><div class="tile-note">Almost all of these come from Aqua, the satellite that's running late.</div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <h3>Where</h3>
+        <div class="map-toggles">
+          <label><input type="checkbox" id="show-points" checked> Fire points</label>
+          <label><input type="checkbox" id="show-choro" checked> District totals</label>
+        </div>
+      </div>
+      <div id="map" role="region" aria-label="Map of fire detections"></div>
+      <div class="legend" id="map-legend"></div>
+    </div>
+
+    <div class="grid2">
+      <div class="card">
+        <h3>When: detections per day, by state</h3>
+        <div class="legend" id="day-legend"></div>
+        <div class="chart"><canvas id="by-day" aria-label="Daily detections by state"></canvas></div>
+      </div>
+      <div class="card">
+        <h3>Hall of Flame: worst districts</h3>
+        <div class="table-wrap">
+          <table id="districts">
+            <thead><tr><th>#</th><th>District</th><th>State</th><th class="num">Detections</th><th class="num">FRP (MW)</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Who was in charge ===== -->
+  <section class="story">
+    <h2 class="section-title">Who's been in charge? Everyone. 🎠</h2>
+    <p class="muted">Ruling parties since 2015, by government. Every major party in the region has held power somewhere during the smoke years. Pick your favourite to blame; they've all had a turn.</p>
+    <div class="card">
+      <div id="gantt" class="gantt" aria-label="Ruling party by government, 2015 to 2026"></div>
+      <div class="legend" id="gantt-legend"></div>
+      <p class="muted small">Coalition partners are shown under the lead party. Emoji stand in for election symbols.</p>
+    </div>
+  </section>
+
+  <!-- ===== Timeline ===== -->
+  <section class="story">
+    <h2 class="section-title">A decade of bold action™</h2>
+    <p class="muted">Who did what, and what came of it. Tags show who acted (tap one to check who was in charge): the <span class="actor union inline"><span class="tag">Union</span></span> government or its agencies, a <span class="actor state inline"><span class="tag">State</span></span> government, or a <span class="actor court inline"><span class="tag">Court</span></span>.</p>
+    <ol class="timeline">
+      <li><span class="when">2009</span><div><div class="actors"><a class="actor state" href="https://en.wikipedia.org/wiki/List_of_chief_ministers_of_Punjab_(India)" target="_blank" rel="noopener" title="Punjab government: who was Chief Minister when"><span class="tag">Punjab</span>⚖️ SAD–BJP</a></div><strong><a href="https://leap.unep.org/en/countries/in/national-legislation/punjab-preservation-subsoil-water-act-2009" target="_blank" rel="noopener">Punjab delays paddy planting to save groundwater</a>.</strong> Sensible on its own, but it <a href="https://theprint.in/theprint-essential/what-is-the-punjab-groundwater-conservation-law-why-its-being-blamed-for-delhis-air-pollution/1838049" target="_blank" rel="noopener">pushes the harvest later</a> and squeezes the gap before wheat sowing to a couple of weeks. Fastest way to clear a field in a hurry? A matchstick.<span class="status">Side effect: still in effect</span></div></li>
+      <li><span class="when">Dec 2015</span><div><div class="actors"><a class="actor court" href="https://greentribunal.gov.in/" target="_blank" rel="noopener" title="National Green Tribunal official website"><span class="tag">Court</span>🏛️ National Green Tribunal</a></div><strong><a href="https://www.downtoearth.org.in/agriculture/river-of-fire-57924" target="_blank" rel="noopener">Bans crop-residue burning</a></strong> in Delhi, Punjab, Haryana, UP and Rajasthan. <a href="https://www.downtoearth.org.in/air/paddy-burning-ngt-orders-fine-imposition-on-erring-farmers-51698" target="_blank" rel="noopener">Fines: ₹2,500 to ₹15,000</a>.<span class="status">Banned ✅ Stopped ❌</span></div></li>
+      <li><span class="when">2018</span><div><div class="actors"><a class="actor union" href="https://en.wikipedia.org/wiki/List_of_prime_ministers_of_India" target="_blank" rel="noopener" title="Union government: who was Prime Minister when"><span class="tag">Union</span>🪷 BJP-led NDA</a></div><strong><a href="https://www.newkerala.com/news/a/over-rs-544-crore-allotted-crop-residue-management-478.htm" target="_blank" rel="noopener">Launches the Crop Residue Management scheme</a></strong>, subsidising balers, Happy Seeders and friends. <a href="https://ianslive.in/over-rs-544-crore-allotted-for-crop-residue-management-in-2026-27-govt--20260617091324" target="_blank" rel="noopener">By June 2026: <strong>₹4,266 crore</strong> released</a> and <a href="https://www.newkerala.com/news/a/over-rs-544-crore-allotted-crop-residue-management-478.htm" target="_blank" rel="noopener"><strong>3.54 lakh machines</strong> handed out</a>.<span class="status">See map above for results</span></div></li>
+      <li><span class="when">2019</span><div><div class="actors"><a class="actor court" href="https://highcourtchd.gov.in/" target="_blank" rel="noopener" title="Punjab &amp; Haryana High Court official website"><span class="tag">Court</span>🏛️ Punjab &amp; Haryana High Court</a></div><strong><a href="https://www.tribuneindia.com/news/archive/punjab/hc-stays-recovery-of-penalty-on-farmers-for-violating-ban-835023" target="_blank" rel="noopener">Stays recovery of stubble-burning fines</a></strong> from farmers in both states, and asks the agricultural universities to suggest alternatives.<span class="status">Fines: paused ⏸️</span></div></li>
+      <li><span class="when">Oct 2020</span><div><div class="actors"><a class="actor union" href="https://en.wikipedia.org/wiki/List_of_prime_ministers_of_India" target="_blank" rel="noopener" title="Union government: who was Prime Minister when"><span class="tag">Union</span>🪷 BJP-led NDA</a></div><strong><a href="https://prsindia.org/billtrack/the-commission-for-air-quality-management-in-national-capital-region-and-adjoining-areas-ordinance-2020" target="_blank" rel="noopener">Creates the Commission for Air Quality Management</a></strong> (CAQM) by ordinance, to finally coordinate NCR's air.<span class="status">Commission formed. Smoke not informed.</span></div></li>
+      <li><span class="when">2020</span><div><div class="actors"><a class="actor state" href="https://en.wikipedia.org/wiki/List_of_chief_ministers_of_Delhi" target="_blank" rel="noopener" title="Delhi government: who was Chief Minister when"><span class="tag">Delhi</span>🧹 AAP</a></div><strong><a href="https://thewire.in/environment/pusa-decomposer-success-stubble-burning-arvind-kejriwal" target="_blank" rel="noopener">Sprays the IARI-developed Pusa bio-decomposer</a></strong> on 1,935 acres of Delhi farmland and declares it a success.<span class="status">Punjab's paddy: ~75 lakh acres</span></div></li>
+      <li><span class="when">Sep 2022</span><div><div class="actors"><a class="actor state" href="https://en.wikipedia.org/wiki/List_of_chief_ministers_of_Punjab_(India)" target="_blank" rel="noopener" title="Punjab government: who was Chief Minister when"><span class="tag">Punjab</span>🧹 AAP</a><a class="actor state" href="https://en.wikipedia.org/wiki/List_of_chief_ministers_of_Delhi" target="_blank" rel="noopener" title="Delhi government: who was Chief Minister when"><span class="tag">Delhi</span>🧹 AAP</a><a class="actor union" href="https://en.wikipedia.org/wiki/List_of_prime_ministers_of_India" target="_blank" rel="noopener" title="Union government: who was Prime Minister when"><span class="tag">Union</span>🪷 BJP-led NDA</a></div><strong><a href="https://thewire.in/government/delhi-and-punjab-govts-hope-to-combat-stubble-burning-through-bio-decomposer" target="_blank" rel="noopener">Punjab proposes ₹2,500 per acre</a></strong> to farmers who don't burn, with the Centre paying ₹1,500. <strong>The Centre says no.</strong> The two AAP governments <a href="https://m.tribuneindia.com/news/punjab/punjab-and-delhi-govts-join-hands-for-stubble-management-432003" target="_blank" rel="noopener">settle for a 5,000-acre decomposer pilot</a>.<span class="status">Everyone agrees someone else should pay</span></div></li>
+      <li><span class="when">Oct 2023</span><div><div class="actors"><a class="actor state" href="https://en.wikipedia.org/wiki/List_of_chief_ministers_of_Haryana" target="_blank" rel="noopener" title="Haryana government: who was Chief Minister when"><span class="tag">Haryana</span>🪷 BJP</a></div><strong><a href="https://www.tribuneindia.com/news/haryana/farmers-to-get-cash-incentives-for-managing-crop-residue" target="_blank" rel="noopener">Offers ₹1,000 per acre</a></strong> to farmers who manage straw without burning it.<span class="status"><a href="https://www.tribuneindia.com/news/haryana/delays-in-crop-residue-management-incentives-may-discourage-farmers" target="_blank" rel="noopener">Payment delays reported 📬</a></span></div></li>
+      <li><span class="when">Nov 2023</span><div><div class="actors"><a class="actor court" href="https://www.sci.gov.in/" target="_blank" rel="noopener" title="Supreme Court official website"><span class="tag">Court</span>🏛️ Supreme Court</a></div><strong><a href="https://www.downtoearth.org.in/news/governance/sc-orders-punjab-rajasthan-haryana-to-stop-stubble-burning-clarifies-firecracker-regulations-apply-to-all-states-not-just-delhi-92683" target="_blank" rel="noopener">Orders Punjab, Haryana, Rajasthan and UP to stop stubble burning</a>.</strong> How? That's the states' job, says the court.<span class="status">Stopped? See 2024 ⬇️</span></div></li>
+      <li><span class="when">Jan 2024</span><div><div class="actors"><a class="actor union" href="https://caqm.nic.in/" target="_blank" rel="noopener" title="CAQM official website"><span class="tag">Union agency</span>CAQM</a></div><strong><a href="https://www.deccanherald.com/amp/story/india%2Fdelhi%2Fcentre-aims-to-stamp-out-farm-fires-with-satellite-images-of-scorched-earth-3287678" target="_blank" rel="noopener">Forms an expert committee</a></strong> under ISRO's NRSC to standardise how burnt area is measured.<span class="status">Under validation…</span></div></li>
+      <li><span class="when">Oct–Nov 2024</span><div><div class="actors"><a class="actor court" href="https://www.sci.gov.in/" target="_blank" rel="noopener" title="Supreme Court official website"><span class="tag">Court</span>🏛️ Supreme Court</a><a class="actor union" href="https://en.wikipedia.org/wiki/List_of_prime_ministers_of_India" target="_blank" rel="noopener" title="Union government: who was Prime Minister when"><span class="tag">Union</span>🪷 BJP-led NDA</a></div><strong>The Supreme Court says the anti-burning law has been left <a href="https://m.thewire.in/article/environment/after-supreme-courts-rebuke-centre-doubles-penalties-on-stubble-burning" target="_blank" rel="noopener">"toothless"</a></strong> and <a href="https://lawchakra.in/supreme-court/nasa-v-stubble-burning-sc-monitoring/" target="_blank" rel="noopener">hears that farmers were allegedly advised to burn after satellites pass</a>. The Centre <a href="https://www.livelaw.in/top-stories/after-supreme-court-rap-centre-doubles-penalties-for-stubble-burning-farmers-to-pay-up-to-rs-30000-for-violations-274583" target="_blank" rel="noopener"><strong>doubles fines</strong> to ₹5,000–₹30,000</a>.<span class="status">Fires learn to tell time ⏰</span></div></li>
+      <li><span class="when">Nov 2025</span><div><div class="actors"><a class="actor union" href="https://www.isro.gov.in/" target="_blank" rel="noopener" title="ISRO official website"><span class="tag">Union agency</span>ISRO</a></div><strong>An ISRO study confirms</strong> that <a href="https://indianexpress.com/article/cities/delhi/stubble-burning-air-pollution-supreme-court-protocol-burnt-area-farm-fires-10959536/" target="_blank" rel="noopener">peak burning has moved to late afternoon and evening</a> (Space Applications Centre, <em>Current Science</em>).<span class="status">Now officially working night shifts</span></div></li>
+      <li><span class="when">Nov 2026</span><div><div class="actors"><a class="actor union" href="https://www.iari.res.in/" target="_blank" rel="noopener" title="IARI official website"><span class="tag">Union agency</span>IARI</a></div><strong><a href="https://indianexpress.com/article/cities/delhi/stubble-burning-air-pollution-supreme-court-protocol-burnt-area-farm-fires-10959536/" target="_blank" rel="noopener">Still no finalised burnt-area protocol</a>.</strong> IARI says, under RTI, that it is "only researching" one.<span class="status loading">Loading <span class="bar"><span></span></span> 2 years and counting</span></div></li>
+    </ol>
+  </section>
+
+  <!-- ===== Bingo ===== -->
+  <section class="story">
+    <h2 class="section-title">Smog season excuse bingo 🎱</h2>
+    <p class="muted">Keep this open during the next press conference. Tap a square each time you hear one. Get five in a row to win clean air (offer not valid in NCR). Every square really happened: hit ↗ to see who said or did it.</p>
+    <div class="bingo-wrap card">
+      <div id="bingo" class="bingo" role="grid" aria-label="Excuse bingo card"></div>
+      <div class="bingo-foot">
+        <p id="bingo-msg" class="bingo-msg" aria-live="polite">&nbsp;</p>
+        <button type="button" id="bingo-new">Shuffle &amp; reset</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Farmers ===== -->
+  <section class="story" id="farmer">
+    <h2 class="section-title">Before you blame the farmer: a quick maths lesson 🧮</h2>
+    <p class="muted">It's late October in Sangrur. The paddy is cut. Wheat has to be sown in about two weeks or the yield suffers. The field is covered in loose straw.
+      Our farmer has these options:</p>
+
+    <div class="card">
+      <div class="table-wrap">
+        <table class="options">
+          <thead><tr><th>Option</th><th>Cost</th><th>Time</th><th>The catch</th></tr></thead>
+          <tbody>
+            <tr><td data-label="Option"><strong>🌱 Rent a seeder</strong> to sow straight into the straw</td><td data-label="Cost">Thousands of rupees an acre. Punjab reckoned ₹2,500/acre of compensation was fair.</td><td data-label="Time">Whenever the machine turns up</td><td data-label="The catch">3.54 lakh subsidised machines exist across four states, and every farmer needs one in the same fortnight.</td></tr>
+            <tr><td data-label="Option"><strong>📦 Bale it and sell it</strong></td><td data-label="Cost">Baling costs money</td><td data-label="Time">Days</td><td data-label="The catch">To whom? The two big straw-to-ethanol plants (Panipat, running; Bathinda, still under construction) are built to eat <strong>2 lakh tonnes a year each</strong>: a rounding error of the straw mountain.</td></tr>
+            <tr><td data-label="Option"><strong>🧪 Spray bio-decomposer</strong></td><td data-label="Cost">Cheap</td><td data-label="Time">~20 days to break down</td><td data-label="The catch">Wheat needed sowing yesterday.</td></tr>
+            <tr><td data-label="Option"><strong>🙏 Wait for the promised incentive</strong></td><td data-label="Cost">Free</td><td data-label="Time">Haryana: "payment delays". Punjab's ₹2,500/acre ask: the Centre said no.</td><td data-label="The catch">Your landlord and your bank still want their money on time.</td></tr>
+            <tr class="hl"><td data-label="Option"><strong>🔥 Matchstick</strong></td><td data-label="Cost">₹1</td><td data-label="Time">One evening</td><td data-label="The catch">Up to ₹30,000 fine, <em>if</em> caught. Most satellites have clocked out by 3 PM.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="callout">Put any of us in those boots and we'd be lighting the match too. Burning isn't a character flaw. It's the cheapest answer to a problem built by people who will never stand in that field.</p>
+    </div>
+
+    <h3 class="sub">Why the government fines the farmer instead of fixing anything</h3>
+    <div class="easyhard">
+      <div class="card easy">
+        <h4>✅ Easy: one press release, done by lunch</h4>
+        <ul>
+          <li>Double the fines</li>
+          <li>File FIRs against farmers</li>
+          <li>Put "red entries" in their land records</li>
+          <li>Blame the neighbouring state (ruled by the other party, obviously)</li>
+          <li>Inaugurate a smog tower; pose for photos</li>
+          <li>Form a committee</li>
+        </ul>
+      </div>
+      <div class="card hard">
+        <h4>🏗️ Hard: takes longer than one election cycle</h4>
+        <ul>
+          <li><strong>Change what Punjab grows.</strong> Guaranteed government buying (MSP) makes thirsty paddy the safe bet, so Punjab grows rice that mostly leaves the state, using groundwater it doesn't have.</li>
+          <li><strong>Fix the crop calendar</strong> squeezed by the 2009 groundwater law, without draining the aquifers.</li>
+          <li><strong>Build a real straw market</strong> (collection, storage, buyers, prices) so straw is worth more than a matchstick.</li>
+          <li><strong>Get machines to small farmers on time</strong>, not just on paper.</li>
+          <li><strong>Pay farmers not to burn</strong>, and actually send the money.</li>
+          <li><strong>Make the Centre and five state governments</strong>, run by rival parties, cooperate for more than one press conference.</li>
+        </ul>
+      </div>
+    </div>
+    <p class="callout wide">A fine fits in a tweet and makes the problem the farmer's fault. A fix takes years, money and cooperation between rivals, and the credit might go to whoever wins the next election. So, year after year, we get the tweet.</p>
+  </section>
+
+  <!-- ===== What should Punjab grow ===== -->
+  <section class="story" id="grow">
+    <h2 class="section-title">So what <em>should</em> Punjab grow? 🌽</h2>
+    <p class="muted">First, a quick look at the national grain strategy, as currently practised.</p>
+
+    <div class="absurd">
+      <div class="absurd-stat"><div class="absurd-num">152–156%</div><div class="absurd-label">of its annual groundwater recharge is what Punjab pumps out. 110 of 153 blocks are "over-exploited".</div><div class="src"><a href="https://www.downtoearth.org.in/water/punjabs-groundwater-crisis-52-more-groundwater-extraction-than-annual-availability-canals-being-sought-as-a-solution" target="_blank" rel="noopener">CGWB 2025, via Down To Earth</a></div></div>
+      <div class="absurd-stat"><div class="absurd-num">~3×</div><div class="absurd-label">the required buffer: rice in central stocks was 403 lakh tonnes against a norm of 135 (1 Jul 2026).</div><div class="src"><a href="https://www.businesstoday.in/latest/economy/story/global-food-security-faces-fresh-risks-but-indias-grain-buffer-offers-a-cushion-560357-2026-10-08" target="_blank" rel="noopener">Business Today, Oct 2026</a></div></div>
+      <div class="absurd-stat"><div class="absurd-num">₹1.61 lakh crore</div><div class="absurd-label">spent importing ~16 million tonnes of edible oil in 2024-25.</div><div class="src"><a href="https://www.outlookbusiness.com/markets/edible-oil-imports-up-22-to-161-lakh-cr-in-2024-25-mkt-yr-volume-flat-sea" target="_blank" rel="noopener">SEA, via Outlook Business</a></div></div>
+      <div class="absurd-stat"><div class="absurd-num">7.3 Mt</div><div class="absurd-label">of pulses imported in 2024-25 (~$5.5 billion), a record.</div><div class="src"><a href="https://vajiramandravi.com/current-affairs/indias-import-burden-rising-costs-of-pulses-and-edible-oils/" target="_blank" rel="noopener">Trade data, via Vajiram &amp; Ravi</a></div></div>
+    </div>
+    <p class="callout wide">So: Punjab drains its aquifers to grow rice the country already has too much of, while India spends lakhs of crores importing oil and pulses that Punjab could grow on far less water.
+      Somewhere, a committee is calling this "food security".</p>
+
+    <h3 class="sub">Why farmers still pick paddy (spoiler: they're not stupid)</h3>
+    <div class="card prose">
+      <ul>
+        <li><strong>The government buys every grain of it</strong> at the support price (MSP). Almost no other crop gets that guarantee.</li>
+        <li><strong>Pumping water is basically free</strong>, thanks to free farm power, so the aquifer's bill goes to the next generation.</li>
+        <li><strong>The alternatives sell for far less than promised in the mandi.</strong> <a href="https://thewire.in/agriculture/punjab-farmers-protest-msp-returns" target="_blank" rel="noopener">Maize sold for as little as ₹800/quintal in Punjab against an MSP of ₹1,850</a>, with hardly any government buying. In 2022, summer moong <a href="https://www.devdiscourse.com/article/headlines/2095571-punjab-to-compensate-farmers-for-selling-moong-below-msp" target="_blank" rel="noopener">sold below its ₹7,275 MSP</a> and the CM promised to cover up to ₹1,000/quintal of the gap; growers said <a href="https://theprint.in/agriculture/why-punjab-farmers-who-bet-big-on-moong-this-summer-reaped-a-harvest-of-discontent/1128676" target="_blank" rel="noopener">the MSP became the ceiling price</a>. An MSP is just a number when nobody buys at it.</li>
+      </ul>
+    </div>
+
+    <h3 class="sub">The menu</h3>
+    <div class="card">
+      <div class="table-wrap">
+        <table class="options grow">
+          <thead><tr><th>Crop</th><th>Water vs paddy</th><th>Where it fits</th><th>Returns &amp; risk today</th><th>Nation needs it?</th></tr></thead>
+          <tbody>
+            <tr><td data-label="Crop"><strong>🌽 Kharif maize</strong></td><td data-label="Water vs paddy">Much less</td><td data-label="Where it fits">Most of Punjab, except waterlogged pockets</td><td data-label="Returns &amp; risk today"><a href="https://indianjournals.com/article/jadp-35-1-004" target="_blank" rel="noopener">Roughly equal to paddy at best</a>; no assured buyer; needs drying</td><td data-label="Nation needs it?">✅ Feed &amp; ethanol demand rising</td></tr>
+            <tr><td data-label="Crop"><strong>🫘 Summer moong</strong> between wheat and paddy</td><td data-label="Water vs paddy">Very little</td><td data-label="Where it fits">Statewide, a ~60-day catch crop</td><td data-label="Returns &amp; risk today">Short crop; <a href="https://www.devdiscourse.com/article/headlines/2095571-punjab-to-compensate-farmers-for-selling-moong-below-msp" target="_blank" rel="noopener">market price is the risk</a></td><td data-label="Nation needs it?">✅✅ Record pulse imports; also fixes nitrogen</td></tr>
+            <tr><td data-label="Crop"><strong>☁️ Cotton</strong></td><td data-label="Water vs paddy">Less</td><td data-label="Where it fits">South-west Malwa: Bathinda, Mansa, Fazilka</td><td data-label="Returns &amp; risk today"><a href="https://wtocentre.iift.ac.in/workingpaper/CWS_WorkingPaper_87_07072025.pdf" target="_blank" rel="noopener">Lower and volatile</a>; pink bollworm</td><td data-label="Nation needs it?">✅ Textiles</td></tr>
+            <tr><td data-label="Crop"><strong>🌼 Mustard &amp; oilseeds</strong></td><td data-label="Water vs paddy">Less</td><td data-label="Where it fits">Some rabi land now under wheat</td><td data-label="Returns &amp; risk today">Decent; price support patchy</td><td data-label="Nation needs it?">✅✅ The biggest import bill</td></tr>
+            <tr><td data-label="Crop"><strong>🍊 Kinnow, vegetables, poplar</strong></td><td data-label="Water vs paddy">Mostly less</td><td data-label="Where it fits">Abohar–Fazilka (kinnow), near cities</td><td data-label="Returns &amp; risk today">Can pay well; needs cold chains and buyers</td><td data-label="Nation needs it?">➖ Niche, not a replacement</td></tr>
+            <tr class="hl"><td data-label="Crop"><strong>🌾 Smarter paddy</strong> where it stays</td><td data-label="Water vs paddy"><a href="https://www.pressreader.com/india/hindustan-times-bathinda/20220514/281655373670948" target="_blank" rel="noopener">PR-126: ~25% less</a>; <a href="https://epubs.icar.org.in/index.php/IJAgS/article/download/116073/45141/337186" target="_blank" rel="noopener">direct seeding: 10–20% less</a></td><td data-label="Where it fits">Statewide</td><td data-label="Returns &amp; risk today"><a href="https://www.tribuneindia.com/news/ludhiana/pau-rice-variety-pr-126-retains-the-top-spot-again-634519" target="_blank" rel="noopener">Already 33% of paddy area</a> (2023)</td><td data-label="Nation needs it?">✅ Less water <em>and</em> a wider gap before wheat, so less burning</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="muted small">PAU on PR-126: it "<a href="https://www.tribuneindia.com/news/ludhiana/pr-126-variety-of-rice-more-suited-to-conditions-pau-tells-farmers" target="_blank" rel="noopener">requires less water, has less straw load while ensuring more window period between rice harvest and wheat sowing</a>". The shorter the paddy season, the less the farmer needs a matchstick.</p>
+    </div>
+
+    <h3 class="sub">How to actually make them switch (hint: not a press release)</h3>
+    <div class="easyhard">
+      <div class="card hard">
+        <h4>💰 Things that would work</h4>
+        <ul>
+          <li><strong>Guarantee the price of the alternative.</strong> Buy maize, pulses and oilseeds at MSP, or pay the gap when the mandi pays less.</li>
+          <li><strong>Pay for water saved, whatever the crop.</strong> Fund it from the power subsidy the farmer would stop using.</li>
+          <li><strong>Line up anchor buyers.</strong> Ethanol and feed plants contract maize at a fixed price <em>before</em> sowing, like the government does for paddy.</li>
+          <li><strong>Keep paddy where the water allows</strong>, but short-duration and direct-seeded.</li>
+        </ul>
+      </div>
+      <div class="card easy">
+        <h4>🧪 What's been tried</h4>
+        <ul>
+          <li>Punjab's <a href="https://www.theweek.in/wire-updates/business/2025/06/04/nrg22-pb-maize.html" target="_blank" rel="noopener">2025 pilot</a> paid <strong>₹17,500/hectare</strong> and promised to buy maize at ₹2,400/quintal.</li>
+          <li>Kharif maize rose from 86,000 to <a href="https://rozanaspokesman.com/news/punjab/060925/punjab-achieves-1627-growth-in-kharif-maize-area-touches-1-lakh-hec.html" target="_blank" rel="noopener">~1 lakh hectares</a>, and the scheme <a href="https://theprint.in/india/punjab-govt-expands-kharif-maize-scheme-to-16-districts/2920931/" target="_blank" rel="noopener">grew to 16 districts in 2026-27</a>.</li>
+          <li>Paddy covers ~30 lakh hectares. So: a promising start, and also a rounding error.</li>
+        </ul>
+      </div>
+    </div>
+    <p class="callout wide">The pattern isn't complicated: <strong>farmers grow whatever the government guarantees to buy.</strong> Today that's paddy. So we get paddy, sinking aquifers and smoke, and then an emergency meeting about the smoke.
+      Fixing it means guaranteeing a market for pulses, oilseeds and maize, and that costs real money for years. A fine costs nothing.</p>
+  </section>
+
+  <!-- ===== Fine print ===== -->
+  <section class="story">
+    <h2 class="section-title">The fine print (we're the honest ones here)</h2>
+    <div class="card prose">
+      <ul>
+        <li><strong>Detections, not fires.</strong> Each point is a 375 m (VIIRS) or 1 km (MODIS) pixel that one satellite flagged as hot during one pass. The same field can show up on several satellites.</li>
+        <li><strong>Undercount by design.</strong> Polar satellites look a few times a day. A falling count can mean better hiding, not less burning.</li>
+        <li><strong>Burnt area is the real measure.</strong> India still has no finalised burnt-area protocol, two years after the Supreme Court asked (<a href="https://indianexpress.com/article/cities/delhi/stubble-burning-air-pollution-supreme-court-protocol-burnt-area-farm-fires-10959536/">Indian Express, Nov 2026</a>). Burnt-area mapping is on this project's roadmap.</li>
+        <li><strong>Not every fire is stubble.</strong> Industrial heat sources are removed where FIRMS flags them (archived data). Recent data may include a few.</li>
+        <li><strong>Season comparison uses one satellite</strong> (NOAA-20), because S-NPP stopped sending data on 2 Nov 2026 and NOAA-21 only started in 2023. Mixing them would fake a trend.</li>
+        <li><strong>Boundaries</strong> are Census-2011 districts; newer districts are counted inside their parent.</li>
+      </ul>
+      <p class="muted small">Data: NASA FIRMS (VIIRS NOAA-20, NOAA-21, S-NPP; MODIS Aqua/Terra), standard-processing archives where available, else near-real-time. Times in IST. Updated every 3 hours.</p>
+    </div>
+  </section>
+  <!-- ===== Glossary ===== -->
+  <section class="story" id="glossary">
+    <h2 class="section-title">Desi-to-English dictionary 📖</h2>
+    <p class="muted">Terms you'll meet on this page. Dotted-underlined words show the same definitions when you hover or tap them.</p>
+    <div class="card"><dl id="glossary-list" class="glossary"></dl></div>
+  </section>
+</main>
+
+<footer class="wrap muted small">
+  <p>Built by an annoyed citizen with a laptop and a free NASA API key. Budget: ₹0. Time taken: less than the burnt-area protocol.</p>
+  <p>File no. 1 of <a href="https://maheepk.net/projects/file-pending/">File Pending</a>, by <a href="https://maheepk.net/">Maheep Kumar</a>. Read the <a href="https://maheepk.net/posts/north-indias-annual-smoke-festival/">write-up</a> · <a href="https://github.com/technusm1/paraliwatch">source on GitHub</a>.</p>
+  <p>Fire data courtesy of NASA FIRMS (LANCE/EOSDIS). Basemap © Esri, HERE, Garmin, © OpenStreetMap contributors.</p>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
