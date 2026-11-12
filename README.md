@@ -1,6 +1,6 @@
-# Parali Watch
+# Pollution Fest
 
-**Live: https://technusm1.github.io/paraliwatch/** · Write-up: https://maheepk.net/posts/north-indias-annual-smoke-festival/ · Part of [File Pending](https://maheepk.net/projects/file-pending/).
+**Live: https://technusm1.github.io/pollution-fest/** · Write-up: https://maheepk.net/posts/north-indias-annual-smoke-festival/ · Project page: https://maheepk.net/projects/pollution-fest/
 
 Public dashboard of satellite-detected farm fires across Punjab, Haryana,
 Uttar Pradesh, Rajasthan, Delhi and Uttarakhand, built from NASA FIRMS and updated
@@ -16,16 +16,16 @@ data, Sentinel-2 burnt area, air quality).
 export FIRMS_MAP_KEY=...
 
 # 2. Pull detections (UTC dates). Backfill a season, or just the last few days.
-go run ./cmd/paraliwatch fetch --from 2026-09-15 --to 2026-11-12
-go run ./cmd/paraliwatch fetch --days 3
+go run ./cmd/pollution-fest fetch --from 2026-09-15 --to 2026-11-12
+go run ./cmd/pollution-fest fetch --days 3
 
 # 3. Interval report in the terminal (times are IST unless zoned)
-go run ./cmd/paraliwatch report --from "2026-11-01 00:00" --to "2026-11-12 18:00"
-go run ./cmd/paraliwatch report --from 2026-11-01 --to 2026-11-11 --min-conf high --json
+go run ./cmd/pollution-fest report --from "2026-11-01 00:00" --to "2026-11-12 18:00"
+go run ./cmd/pollution-fest report --from 2026-11-01 --to 2026-11-11 --min-conf high --json
 
 # 4. Build and preview the site
-go run ./cmd/paraliwatch build --out site
-go run ./cmd/paraliwatch serve --dir site   # http://127.0.0.1:8080
+go run ./cmd/pollution-fest build --out site
+go run ./cmd/pollution-fest serve --dir site   # http://127.0.0.1:8080
 ```
 
 Options: `--states "Punjab,Haryana"` limits coverage; `build --since 2024-01-01`
@@ -42,7 +42,7 @@ caps how much history is published.
 ## Layout
 
 ```
-cmd/paraliwatch/      CLI: fetch, report, build, serve
+cmd/pollution-fest/      CLI: fetch, report, build, serve
 internal/firms/       FIRMS API client, CSV parsing, SP/NRT request planning
 internal/geo/         embedded district boundaries, point-in-polygon locator
 internal/store/       raw CSV partitions: data/fires/YYYY-MM-DD/<FAMILY>.<SP|NRT>.csv

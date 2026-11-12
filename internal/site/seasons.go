@@ -4,8 +4,8 @@ import (
 	"sort"
 	"time"
 
-	"paraliwatch/internal/firms"
-	"paraliwatch/internal/report"
+	"pollution-fest/internal/firms"
+	"pollution-fest/internal/report"
 )
 
 // SeasonFamily is the satellite used for year-over-year comparison. VIIRS on

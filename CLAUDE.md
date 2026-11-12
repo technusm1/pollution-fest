@@ -1,4 +1,4 @@
-# Parali Watch
+# Pollution Fest
 
 Public dashboard of satellite-detected farm fires (stubble burning) in Punjab, Haryana,
 Uttar Pradesh, Rajasthan, Delhi and Uttarakhand. Go CLI + static site on GitHub Pages.
@@ -10,16 +10,16 @@ Roadmap and rationale: `PLAN.md` (keep its phase checkboxes current when work la
 ```sh
 set -a; source .env; set +a                     # FIRMS_MAP_KEY (gitignored; never commit it)
 go test ./...
-go run ./cmd/paraliwatch fetch --from 2026-09-15     # or --days 3; UTC dates; idempotent
-go run ./cmd/paraliwatch report --from 2026-11-01 --to 2026-11-12   # IST; date-only --to = whole day
-go run ./cmd/paraliwatch build --out site
-go run ./cmd/paraliwatch serve --dir site            # 127.0.0.1:8080
-go run ./cmd/paraliwatch compact                     # gzip + drop rows outside states/extras
+go run ./cmd/pollution-fest fetch --from 2026-09-15     # or --days 3; UTC dates; idempotent
+go run ./cmd/pollution-fest report --from 2026-11-01 --to 2026-11-12   # IST; date-only --to = whole day
+go run ./cmd/pollution-fest build --out site
+go run ./cmd/pollution-fest serve --dir site            # 127.0.0.1:8080
+go run ./cmd/pollution-fest compact                     # gzip + drop rows outside states/extras
 ```
 
 ## Layout
 
-- `cmd/paraliwatch/`: CLI (fetch, report, build, serve)
+- `cmd/pollution-fest/`: CLI (fetch, report, build, serve)
 - `internal/firms/`: FIRMS area + data_availability API, CSV parsing (VIIRS/MODIS), `Plan()` picks SP vs NRT per day, ≤5-day chunks
 - `internal/geo/`: embedded Census-2011 district GeoJSON (`boundaries/`), point-in-polygon via `paulmach/orb`. `Keeper` = which raw rows to store: the six states + `ExtraRegions` (default `pakistan-punjab`, geoBoundaries public domain), ~2 km tolerance
 - `internal/store/`: raw partitions `data/fires/YYYY-MM-DD/<FAMILY>.<SP|NRT>.csv.gz` (UTC date; gzip with zeroed mtime so identical data means identical bytes; legacy `.csv` still readable). `Compact` rewrites + filters in place. Each write replaces the partition; SP is never downgraded to NRT
@@ -55,4 +55,5 @@ go run ./cmd/paraliwatch compact                     # gzip + drop rows outside 
 - Site has a satirical layer: hero + Golden Matchstick, "Festival highlights" effect cards, YoY (NOAA-20 only), count-vs-burnt-area gap (iFOREST), Aqua-drift explainer, rulers strip, linked timeline with Union/State/Court badges and emoji party symbols, excuse bingo (26 sourced tiles with ↗ links, "Shuffle & reset"), "Before you blame the farmer", "So what should Punjab grow?". Keep it non-partisan in tone (every party gets the same treatment) and sourced.
 - All 76 external links audited 2026-11-12 (status, homepage redirect, soft-404). Re-run the audit after content changes.
 - Session handoff (pending decisions, next ideas) lives in Claude memory for this folder: `session-handoff`.
-- **Live since 2026-11-12:** public repo https://github.com/technusm1/paraliwatch, dashboard https://technusm1.github.io/paraliwatch/ (Pages via Actions; `update.yml` runs every 3h with the `FIRMS_MAP_KEY` secret and commits data as paraliwatch-bot, so `git pull --rebase` before pushing). Blog: https://maheepk.net/projects/file-pending/ (project), /projects/file-pending/parali-watch/ (project page), /posts/north-indias-annual-smoke-festival/ (post).
+- Renamed from Parali Watch / `paraliwatch` on 2026-11-12. The old Pages URL technusm1.github.io/paraliwatch/ is dead (Pages does not redirect); GitHub redirects the old repo URL.
+- **Live since 2026-11-12:** public repo https://github.com/technusm1/pollution-fest, dashboard https://technusm1.github.io/pollution-fest/ (Pages via Actions; `update.yml` runs every 3h with the `FIRMS_MAP_KEY` secret and commits data as pollution-fest-bot, so `git pull --rebase` before pushing). Blog: https://maheepk.net/projects/pollution-fest/ (project page; old /projects/file-pending/ URLs redirect there), /posts/north-indias-annual-smoke-festival/ (post).

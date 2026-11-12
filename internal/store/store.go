@@ -23,7 +23,7 @@ import (
 	"strings"
 	"time"
 
-	"paraliwatch/internal/firms"
+	"pollution-fest/internal/firms"
 )
 
 var header = []string{"latitude", "longitude", "acq_utc", "source", "satellite", "instrument", "confidence", "frp", "daynight", "type"}

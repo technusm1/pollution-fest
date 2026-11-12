@@ -1,11 +1,11 @@
-// Command paraliwatch ingests NASA FIRMS farm-fire detections for north India
+// Command pollution-fest ingests NASA FIRMS farm-fire detections for north India
 // and builds a static public dashboard.
 //
-//	paraliwatch fetch  --from 2026-10-01 --to 2026-11-12     # or --days 3
-//	paraliwatch report --from "2026-11-01 00:00" --to "2026-11-12 23:59"
-//	paraliwatch build  --out site
-//	paraliwatch serve  --dir site
-//	paraliwatch compact                                      # gzip + drop out-of-region rows
+//	pollution-fest fetch  --from 2026-10-01 --to 2026-11-12     # or --days 3
+//	pollution-fest report --from "2026-11-01 00:00" --to "2026-11-12 23:59"
+//	pollution-fest build  --out site
+//	pollution-fest serve  --dir site
+//	pollution-fest compact                                      # gzip + drop out-of-region rows
 package main
 
 import (
@@ -22,21 +22,21 @@ import (
 	"text/tabwriter"
 	"time"
 
-	"paraliwatch/internal/firms"
-	"paraliwatch/internal/geo"
-	"paraliwatch/internal/report"
-	"paraliwatch/internal/site"
-	"paraliwatch/internal/store"
+	"pollution-fest/internal/firms"
+	"pollution-fest/internal/geo"
+	"pollution-fest/internal/report"
+	"pollution-fest/internal/site"
+	"pollution-fest/internal/store"
 )
 
-const usage = `paraliwatch - track north-Indian farm fires from NASA FIRMS
+const usage = `pollution-fest - track north-Indian farm fires from NASA FIRMS
 
 Usage:
-  paraliwatch fetch  [--from DATE --to DATE | --days N] [--data DIR] [--states LIST] [--force]
-  paraliwatch report  --from TIME --to TIME [--min-conf low|nominal|high] [--states LIST] [--top N] [--json]
-  paraliwatch build  [--out DIR] [--data DIR] [--since DATE] [--states LIST]
-  paraliwatch serve  [--dir DIR] [--addr :8080]
-  paraliwatch compact [--data DIR] [--states LIST] [--extras LIST]
+  pollution-fest fetch  [--from DATE --to DATE | --days N] [--data DIR] [--states LIST] [--force]
+  pollution-fest report  --from TIME --to TIME [--min-conf low|nominal|high] [--states LIST] [--top N] [--json]
+  pollution-fest build  [--out DIR] [--data DIR] [--since DATE] [--states LIST]
+  pollution-fest serve  [--dir DIR] [--addr :8080]
+  pollution-fest compact [--data DIR] [--states LIST] [--extras LIST]
 
 Raw data keeps detections in --states plus --extras regions (default: pakistan-punjab).
 
@@ -71,7 +71,7 @@ func main() {
 		err = fmt.Errorf("unknown command %q", os.Args[1])
 	}
 	if err != nil {
-		fmt.Fprintln(os.Stderr, "paraliwatch:", err)
+		fmt.Fprintln(os.Stderr, "pollution-fest:", err)
 		os.Exit(1)
 	}
 }

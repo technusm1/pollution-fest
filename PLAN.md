@@ -1,4 +1,4 @@
-# Parali Watch: project plan
+# Pollution Fest: project plan
 
 ## Why
 
@@ -28,8 +28,8 @@ and the count-vs-area gap).
 
 ```
 GitHub Actions (cron, every 3h)
-  └─ paraliwatch fetch   NASA FIRMS area API → data/fires/YYYY-MM-DD/<FAMILY>.<SP|NRT>.csv  (committed)
-  └─ paraliwatch build   point-in-polygon → districts → site/data/days/<IST date>.json + manifest
+  └─ pollution-fest fetch   NASA FIRMS area API → data/fires/YYYY-MM-DD/<FAMILY>.<SP|NRT>.csv  (committed)
+  └─ pollution-fest build   point-in-polygon → districts → site/data/days/<IST date>.json + manifest
   └─ GitHub Pages        static site: Leaflet + Chart.js, all interval filtering client-side
 ```
 

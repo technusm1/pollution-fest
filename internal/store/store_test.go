@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"paraliwatch/internal/firms"
+	"pollution-fest/internal/firms"
 )
 
 func TestWriteLoadAndSPPrecedence(t *testing.T) {

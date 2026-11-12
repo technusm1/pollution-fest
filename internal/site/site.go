@@ -14,9 +14,9 @@ import (
 	"sort"
 	"time"
 
-	"paraliwatch/internal/firms"
-	"paraliwatch/internal/geo"
-	"paraliwatch/internal/report"
+	"pollution-fest/internal/firms"
+	"pollution-fest/internal/geo"
+	"pollution-fest/internal/report"
 )
 
 //go:embed web

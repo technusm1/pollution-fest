@@ -94,7 +94,7 @@ func (c *Client) get(ctx context.Context, url string) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	req.Header.Set("User-Agent", "paraliwatch/0.1")
+	req.Header.Set("User-Agent", "pollution-fest/0.1")
 	var lastErr error
 	wait := time.Duration(0)
 	for attempt := 0; attempt < 6; attempt++ {

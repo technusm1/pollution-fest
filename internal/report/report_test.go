@@ -4,8 +4,8 @@ import (
 	"testing"
 	"time"
 
-	"paraliwatch/internal/firms"
-	"paraliwatch/internal/geo"
+	"pollution-fest/internal/firms"
+	"pollution-fest/internal/geo"
 )
 
 func TestLocateAndSummarize(t *testing.T) {

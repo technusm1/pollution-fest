@@ -1,5 +1,5 @@
 /site/
-/paraliwatch
+/pollution-fest
 *.test
 .DS_Store
 .env

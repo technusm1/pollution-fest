@@ -93,7 +93,7 @@ func Product(source string) string {
 	return "NRT"
 }
 
-// Families are the satellite/instrument streams paraliwatch ingests.
+// Families are the satellite/instrument streams pollution-fest ingests.
 // LANDSAT is US/Canada only, so it is excluded.
 var Families = []string{"VIIRS_SNPP", "VIIRS_NOAA20", "VIIRS_NOAA21", "MODIS"}
 

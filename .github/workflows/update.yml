@@ -42,21 +42,21 @@ jobs:
           FIRMS_MAP_KEY: ${{ secrets.FIRMS_MAP_KEY }}
         run: |
           if [ -n "${{ inputs.from }}" ]; then
-            go run ./cmd/paraliwatch fetch --from "${{ inputs.from }}" ${{ inputs.to && format('--to {0}', inputs.to) || '' }}
+            go run ./cmd/pollution-fest fetch --from "${{ inputs.from }}" ${{ inputs.to && format('--to {0}', inputs.to) || '' }}
           else
-            go run ./cmd/paraliwatch fetch --days 3
+            go run ./cmd/pollution-fest fetch --days 3
           fi
 
       - name: Commit raw data
         run: |
-          git config user.name "paraliwatch-bot"
-          git config user.email "paraliwatch-bot@users.noreply.github.com"
+          git config user.name "pollution-fest-bot"
+          git config user.email "pollution-fest-bot@users.noreply.github.com"
           git add data/fires
           git diff --cached --quiet || git commit -m "data: FIRMS update $(date -u +%Y-%m-%dT%H:%MZ)"
           git push
 
       - name: Build site
-        run: go run ./cmd/paraliwatch build --out site
+        run: go run ./cmd/pollution-fest build --out site
 
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3

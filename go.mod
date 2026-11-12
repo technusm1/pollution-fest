@@ -1,4 +1,4 @@
-module paraliwatch
+module pollution-fest
 
 go 1.27.1
 

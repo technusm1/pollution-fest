@@ -5,8 +5,8 @@ import (
 	"sort"
 	"time"
 
-	"paraliwatch/internal/firms"
-	"paraliwatch/internal/geo"
+	"pollution-fest/internal/firms"
+	"pollution-fest/internal/geo"
 )
 
 // IST is India Standard Time (UTC+05:30, no DST).

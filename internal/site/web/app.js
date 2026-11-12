@@ -1,5 +1,5 @@
 "use strict";
-// Parali Watch frontend. All filtering happens here, so any IST interval works
+// Pollution Fest frontend. All filtering happens here, so any IST interval works
 // against static per-day JSON files.
 
 const IST_OFFSET_MS = 5.5 * 3600 * 1000;
