@@ -600,7 +600,7 @@ function checkBingo() {
 // Punjab, TE2023-24 (Annex 5.2), Rs/ha; converted to per acre.
 const HA_PER_ACRE = 1 / 2.471;
 const CACP = { paddyGross: 152161, paddyCost: 60331, maizeCost: 59193 };
-const WHEAT_MSP = 2585; // Rs/q, RMS 2026-27
+const WHEAT_MSP = 2610; // Rs/q, RMS 2027-28 (PIB 2316941), the wheat sown after this kharif
 
 function renderSwitch() {
   const y = +$("c-yield").value, p = +$("c-price").value, b = +$("c-bonus").value;
